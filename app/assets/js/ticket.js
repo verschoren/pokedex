@@ -1,5 +1,5 @@
 var client = ZAFClient.init();
-var environment, pokemon, type, captured;
+var environment, pokemon, gym_type, captured;
 client.invoke('resize', { width: '100%', height: '600px' });
 client.invoke('ticketFields:tags.hide')
 
@@ -32,7 +32,7 @@ async function init() {
     }
 
     if (pokemon != null){
-        type = await getType();
+        gym_type = await getType();
         updateUI();
     } else {
         showEmpty();
@@ -49,15 +49,15 @@ function updateUI(){
     $('#type').html(`
         <span class="
             inline-flex items-center rounded-full 
-            bg-${type.custom_object_record.custom_object_fields.color}-50 
-            px-2 py-1 text-xs font-medium text-${type.custom_object_record.custom_object_fields.color}-700 
-            ring-1 ring-inset ring-${type.custom_object_record.custom_object_fields.color}-600/20
+            bg-${gym_type.custom_object_record.custom_object_fields.color}-50 
+            px-2 py-1 text-xs font-medium text-${gym_type.custom_object_record.custom_object_fields.color}-700 
+            ring-1 ring-inset ring-${gym_type.custom_object_record.custom_object_fields.color}-600/20
         ">
             <img 
-                src="https://pokedex.verschoren.dev/images/${type.custom_object_record.name.toLowerCase()}.png"
+                src="https://pokedex.verschoren.dev/types/${gym_type.custom_object_record.name.toLowerCase()}.png"
                 class="h-4 w-4 mr-2"
             >
-            ${type.custom_object_record.name}
+            ${gym_type.custom_object_record.name}
         </span>
     `);
 }
