@@ -15,7 +15,6 @@ async function init() {
         badge = await getBadge();
         gym_owner = await getGymOwner();
         gym_type = await getType();
-        console.log(badge,gym_owner)
         updateUI();
     }
 }
@@ -32,38 +31,56 @@ async function getBadge(){
 }
 
 async function getGymOwner(){
-    return await client.request({
-        url: '/api/v2/users/'+badge.custom_object_record.custom_object_fields.gym_owner+'.json',
-    })
+    if (badge.custom_object_record.custom_object_fields.gym_owner == null){
+        return null;
+    } else {
+        return await client.request({
+            url: '/api/v2/users/'+badge.custom_object_record.custom_object_fields.gym_owner+'.json',
+        })
+    }
 };
 
 async function getType(){
-    return await client.request({
-        url: '/api/v2/custom_objects/pokemon_type/records/'+badge.custom_object_record.custom_object_fields.gym_type+'.json',
-        type: 'GET',
-        dataType: 'json'
-    });
+    if (badge.custom_object_record.custom_object_fields.gym_type == null){
+        return null;
+    } else {
+        return await client.request({
+            url: '/api/v2/custom_objects/pokemon_type/records/'+badge.custom_object_record.custom_object_fields.gym_type+'.json',
+            type: 'GET',
+            dataType: 'json'
+        });
+    }
 }
 
 function updateUI(){
     $('#badge_image').attr('src', 'https://pokedex.verschoren.dev/badges/'+ badge.custom_object_record.name.toLowerCase().replaceAll(' badge','') +'.png');
     $('#name').html(badge.custom_object_record.name);
     $('#earned').html(formatDate(badge.custom_object_record.created_at));
-    $('#gym_owner').text(gym_owner.user.name);
-    $('#gym_type').html(`
-        <span class="
-            inline-flex items-center rounded-full 
-            bg-${gym_type.custom_object_record.custom_object_fields.color}-50 
-            px-2 py-1 text-xs font-medium text-${gym_type.custom_object_record.custom_object_fields.color}-700 
-            ring-1 ring-inset ring-${gym_type.custom_object_record.custom_object_fields.color}-600/20
-        ">
-            <img 
-                src="https://pokedex.verschoren.dev/types/${gym_type.custom_object_record.name.toLowerCase()}.png"
-                class="h-4 w-4 mr-2"
-            >
-            ${gym_type.custom_object_record.name}
-        </span>
-    `)
+    
+    if (gym_owner == null){
+        $('#gym_owner').text('No owner');
+    } else {
+        $('#gym_owner').text(gym_owner.user.name);
+    }
+    
+    if (gym_type == null){
+        $('#gym_type').html('');
+    } else {
+        $('#gym_type').html(`
+            <span class="
+                inline-flex items-center rounded-full 
+                bg-${gym_type.custom_object_record.custom_object_fields.color}-50 
+                px-2 py-1 text-xs font-medium text-${gym_type.custom_object_record.custom_object_fields.color}-700 
+                ring-1 ring-inset ring-${gym_type.custom_object_record.custom_object_fields.color}-600/20
+            ">
+                <img 
+                    src="https://pokedex.verschoren.dev/types/${gym_type.custom_object_record.name.toLowerCase()}.png"
+                    class="h-4 w-4 mr-2"
+                >
+                ${gym_type.custom_object_record.name}
+            </span>
+        `)
+    }
     $('#information').html(badge.custom_object_record.custom_object_fields.information);
 }
 
