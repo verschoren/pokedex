@@ -34,7 +34,7 @@ function updateUI(){
     $('#image').attr('src',pokemon.custom_object_record.custom_object_fields.image)
     $('#name').html(pokemon.custom_object_record.name)
     $('#index').html('Pokedex #'+pokemon.custom_object_record.external_id)
-    $('#view').attr('href','https://'+environment+'zendesk.com/agent/custom-objects/pokemon/records/'+pokemon.custom_object_record.id+'?zcli_apps=true')
+    $('#view').attr('href','https://'+environment+'.zendesk.com/agent/custom-objects/pokemon/records/'+pokemon.custom_object_record.id+'?zcli_apps=true')
     $('#type').html(`
         <span class="
             inline-flex items-center rounded-full 
