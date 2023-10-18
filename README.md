@@ -1,2 +1,1 @@
-# Pokemon Images
-https://pokemondb.net/pokedex/all
+npx tailwindcss -i ./tailwind/input.css -o ./app/assets/css/style.css --watch

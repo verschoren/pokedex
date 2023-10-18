@@ -2,6 +2,7 @@ var client = ZAFClient.init();
 var environment, pokemon, gym_type, captured;
 client.invoke('resize', { width: '100%', height: '600px' });
 client.invoke('ticketFields:tags.hide')
+client.invoke('ticketFields:ticket_field_14512152430226.hide')
 
 $(document).ready(async function() {
     init();
