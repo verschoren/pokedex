@@ -34,14 +34,21 @@ function updateUI(){
     $('#image').attr('src',pokemon.custom_object_record.custom_object_fields.image)
     $('#name').html(pokemon.custom_object_record.name)
     $('#index').html('Pokedex #'+pokemon.custom_object_record.external_id)
-    $('#type').html(type.custom_object_record.name)
     $('#view').attr('href','https://'+environment+'zendesk.com/agent/custom-objects/pokemon/records/'+pokemon.custom_object_record.id+'?zcli_apps=true')
-    $('#type').addClass('bg-'+type.custom_object_record.custom_object_fields.color+'-50');
-    $('#type').addClass('text-'+type.custom_object_record.custom_object_fields.color+'-700');
-    $('#type').addClass('ring-'+type.custom_object_record.custom_object_fields.color+'-600/20');
-    $('#type').removeClass('bg-green-50');
-    $('#type').removeClass('text-green-700');
-    $('#type').removeClass('ring-green-600/20');
+    $('#type').html(`
+        <span class="
+            inline-flex items-center rounded-full 
+            bg-${type.custom_object_record.custom_object_fields.color}-50 
+            px-2 py-1 text-xs font-medium text-${type.custom_object_record.custom_object_fields.color}-700 
+            ring-1 ring-inset ring-${type.custom_object_record.custom_object_fields.color}-600/20
+        ">
+            <img 
+                src="https://pokedex.verschoren.dev/images/${type.custom_object_record.name.toLowerCase()}.png"
+                class="h-4 w-4 mr-2"
+            >
+            ${type.custom_object_record.name}
+        </span>
+    `);
 }
 
 async function getPokemon(){
