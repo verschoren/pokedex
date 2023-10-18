@@ -1,5 +1,5 @@
 var client = ZAFClient.init();
-var environment, pokemon, type;
+var environment, pokemon, type, captured;
 client.invoke('resize', { width: '100%', height: '600px' });
 client.invoke('ticketFields:tags.hide')
 
@@ -9,6 +9,9 @@ $(document).ready(async function() {
     client.on('ticket.custom_field_14502103878802.changed', function(e) {
         init();
     });
+    client.on('ticket.custom_field_14504649143442.changed', function(e) {
+        init();
+    });
 });
 
 
@@ -16,9 +19,18 @@ async function init() {
     environment = await client.context().then(async function(context){
         return context.account.subdomain;
     });
-    console.log(environment);
-    pokemon = await getPokemon();
-    console.log(pokemon);
+    captured = await client.metadata().then(async function(metadata){
+        return metadata.settings.captured;
+    });
+
+    if (captured == false){
+        client.invoke('ticketFields:custom_field_14504649143442.hide')
+        pokemon = await getPokemon();
+    } else {
+        client.invoke('ticketFields:custom_field_14502103878802.hide')
+        pokemon = await getCapturedPokemon();   
+    }
+
     if (pokemon != null){
         type = await getType();
         updateUI();
@@ -30,7 +42,6 @@ async function init() {
 function updateUI(){
     $('#pokemon').removeClass('hidden');
     $('#empty').addClass('hidden');
-    console.log(type)
     $('#image').attr('src',pokemon.custom_object_record.custom_object_fields.image)
     $('#name').html(pokemon.custom_object_record.name)
     $('#index').html('Pokedex #'+pokemon.custom_object_record.external_id)
@@ -58,6 +69,28 @@ async function getPokemon(){
     if (linked_pokemon == null){
         return null;
     } else {
+        return await client.request({
+            url: '/api/v2/custom_objects/pokemon/records/'+linked_pokemon+'.json',
+            type: 'GET',
+            dataType: 'json'
+        });
+    }
+}
+
+async function getCapturedPokemon(){
+    var captured_pokemon_id = await client.get('ticket.customField:custom_field_14504649143442').then(async function(custom_field){
+        return custom_field['ticket.customField:custom_field_14504649143442'];
+    })
+    if (captured_pokemon_id == null){
+        return null;
+    } else {
+        var linked_pokemon = await client.request({
+            url: '/api/v2/custom_objects/pokemon_captured/records/'+captured_pokemon_id+'.json',
+            type: 'GET',
+            dataType: 'json'
+        }).then(async function(pokemon){
+            return pokemon.custom_object_record.custom_object_fields.pokemon_species;
+        });
         return await client.request({
             url: '/api/v2/custom_objects/pokemon/records/'+linked_pokemon+'.json',
             type: 'GET',

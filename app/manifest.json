@@ -1,5 +1,5 @@
 {
-  "name": "Pokedex",
+  "name": "Pokédex",
   "author": {
     "name": "Thomas Verschoren",
     "email": "support@internalnote.com",
@@ -15,6 +15,12 @@
       }
     }
   },
+  "parameters": [
+    {
+      "name": "captured",
+      "type": "checkbox"
+    }  
+  ],
   "version": "1.0.0",
   "frameworkVersion": "2.0"
 }
