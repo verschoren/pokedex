@@ -10,7 +10,11 @@
   "location": {
     "support": {
       "ticket_sidebar": {
-        "url": "assets/iframe.html",
+        "url": "assets/ticket.html",
+        "flexible": true
+      },
+      "user_sidebar": {
+        "url": "assets/user.html",
         "flexible": true
       }
     }
