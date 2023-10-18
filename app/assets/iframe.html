@@ -7,60 +7,44 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
 </head>
 <body>
-  <aside class="overflow-y-auto p-8">
-    <div class="pb-16">
-      <div>
-        <div class="flex items-start gap-2">
-          <img id="image" src="https://pokedex.verschoren.dev/images/charmander.png">
-          <div>
-            <h2 id="name" class="text-lg font-medium text-gray-900">Charmander</h2>
-            <p id="index" class="text-sm font-medium text-gray-500">Pokedex #4</p>
-          </div>
-        </div>
-      </div>
-      <div>
-        <h3 class="font-medium text-gray-900">Information</h3>
-        <dl class="mt-2 divide-y divide-gray-200 border-b border-t border-gray-200">
-          <div class="flex justify-between py-3 text-sm font-medium">
-            <dt class="text-gray-500">Owner</dt>
-            <dd class="whitespace-nowrap text-gray-900">Gary</dd>
-          </div>
-
-          <div class="flex justify-between py-3 text-sm font-medium">
-            <dt class="text-gray-500">Type</dt>
-            <dd id="type" class="whitespace-nowrap text-gray-900">Fire</dd>
-          </div>
-
-          <div class="flex justify-between py-3 text-sm font-medium">
-            <dt class="text-gray-500">HP</dt>
-            <dd id="hp" class="whitespace-nowrap text-gray-900">69</dd>
-          </div>
-
-          <div class="flex justify-between py-3 text-sm font-medium">
-            <dt class="text-gray-500">Shiny</dt>
-            <dd id="shiny" class="whitespace-nowrap text-gray-900">False</dd>
-          </div>
+  <div id="empty" class="hidden">
+    <button type="button" class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+      <svg class="mx-auto h-12 w-12 text-gray-400" width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g id="Group">
+          <path id="Line" fill-rule="evenodd" clip-rule="evenodd" d="M0 128C0 57.3172 57.306 0 127.975 0C198.694 0 256 57.2671 256 128C256 198.733 198.644 256 127.975 256C57.306 256 0 198.683 0 128ZM236.331 119.34C231.626 64.025 185.231 20.6242 128.676 20.6242C72.1705 20.6242 25.7752 64.025 21.0205 119.34H86.8848C90.8888 100.318 107.755 86.0008 127.975 86.0008C148.195 86.0008 165.061 100.318 169.065 119.34H236.331ZM152.699 128C152.699 124.946 152.149 122.043 151.148 119.34C147.644 109.979 138.585 103.271 127.975 103.271C117.365 103.271 108.306 109.929 104.802 119.34C103.801 122.043 103.251 124.946 103.251 128H103.301C103.301 131.054 103.851 133.957 104.852 136.66C108.356 146.021 117.415 152.729 128.025 152.729C138.635 152.729 147.694 146.071 151.198 136.66C152.199 133.957 152.749 131.054 152.749 128H152.699ZM127.274 235.426C70.7191 235.426 24.3238 192.025 19.6192 136.71H86.8848C90.8888 155.732 107.755 170.049 127.975 170.049C148.195 170.049 165.061 155.732 169.065 136.71H234.979C230.225 191.975 183.83 235.426 127.274 235.426Z" fill="currentColor"/>
+        </g>
+        </svg>
+        <span class="mt-2 block text-sm font-semibold text-gray-900">No Pokémon linked</span>
+    </button>
+    
+  </div>
+  <ul id="pokemon" role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <li class="col-span-1 flex flex-col divide-y divide-gray-200 text-center">
+      <div class="flex flex-1 flex-col p-8">
+        <img id="image" class="mx-auto h-32 w-32 flex-shrink-0 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+        <h3 id="name" class="mt-6 text-sm font-medium text-gray-900"></h3>
+        <dl class="mt-1 flex flex-grow flex-col justify-between">
+          <dd id="index" class="text-sm text-gray-500"></dd>
+          <dd class="mt-3">
+            <span id="type" class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Admin</span>
+          </dd>
         </dl>
       </div>
       <div>
-        <ul role="list" class="">
-          <li class="flex items-center justify-between py-3">
-            <div class="flex items-center">
-              <img id="evolves_image"src="https://pokedex.verschoren.dev/images/charmeleon.png" alt="" class="h-8 w-8 rounded-full">
-              <p id="evolves" class="ml-4 text-sm font-medium text-gray-900">Charmeleon</p>
-            </div>
-          </li>
-          <li class="flex items-center justify-between py-3 border-b border-t border-gray-200">
-            <div class="flex items-center">
-              <img id="ball_image"src="https://pokedex.verschoren.dev/images/masterball.png" alt="" class="h-8 w-8 rounded-full">
-              <p id="ball" class="ml-4 text-sm font-medium text-gray-900">Great ball</p>
-            </div>
-          </li>
-        </ul>
+        <div class="-mt-px flex divide-x divide-gray-200">
+          <div class="flex w-0 flex-1">
+            <a id="view" href="" target="_blank" class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900">
+              View
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                <path fill-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clip-rule="evenodd" />
+                <path fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
-  </aside>
-
+    </li>  
+  </ul>
   <script src="https://static.zdassets.com/zendesk_app_framework_sdk/2.0/zaf_sdk.min.js"></script>
   <script src="main.js"></script>
 </body>
