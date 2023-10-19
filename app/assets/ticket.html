@@ -16,9 +16,21 @@
         <span class="mt-2 block text-sm font-semibold text-gray-900">No Pokémon linked</span>
     </button> 
   </div>
-  <ul id="pokemon" role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+  <ul id="pokemon" role="list" class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div>
+      <div class="-mt-px flex divide-x divide-gray-200">
+        <div class="flex w-0 flex-1">
+          <a id="view" href="" target="_blank" class="relative -mr-px inline-flex w-0 flex-1 items-center justify-end gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-600">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+              <path fill-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clip-rule="evenodd" />
+              <path fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clip-rule="evenodd" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
     <li class="col-span-1 flex flex-col divide-y divide-gray-200 text-center">
-      <div class="flex flex-1 flex-col p-8">
+      <div class="flex flex-1 flex-col">
         <img id="image" class="mx-auto h-32 w-32 flex-shrink-0 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
         <h3 id="name" class="mt-6 text-sm font-medium text-gray-900"></h3>
         <dl class="mt-1 flex flex-grow flex-col justify-between">
@@ -35,20 +47,7 @@
             <div id="strength"></div>
           </div>
         </div>
-      </div>
-      <div>
-        <div class="-mt-px flex divide-x divide-gray-200">
-          <div class="flex w-0 flex-1">
-            <a id="view" href="" target="_blank" class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900">
-              View
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
-                <path fill-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clip-rule="evenodd" />
-                <path fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clip-rule="evenodd" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
+      </div>      
     </li>  
   </ul>
   <script src="https://static.zdassets.com/zendesk_app_framework_sdk/2.0/zaf_sdk.min.js"></script>
