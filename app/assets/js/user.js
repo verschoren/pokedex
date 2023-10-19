@@ -16,6 +16,8 @@ async function init() {
         gym_owner = await getGymOwner();
         gym_type = await getType();
         updateUI();
+    } else {
+        showEmpty();
     }
 }
 
@@ -53,6 +55,9 @@ async function getType(){
 }
 
 function updateUI(){
+    $('#badges').removeClass('hidden');
+    $('#empty').addClass('hidden');
+
     $('#badge_image').attr('src', 'https://pokedex.verschoren.dev/badges/'+ badge.custom_object_record.name.toLowerCase().replaceAll(' badge','') +'.png');
     $('#name').html(badge.custom_object_record.name);
     $('#earned').html(formatDate(badge.custom_object_record.created_at));
@@ -97,4 +102,9 @@ function formatDate(date){
     }
     var year = d.getFullYear();
     return [year, month, day].join('-');
+}
+
+function showEmpty(){
+    $('#empty').removeClass('hidden');
+    $('#badges').addClass('hidden');
 }

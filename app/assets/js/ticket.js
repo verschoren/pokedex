@@ -1,5 +1,5 @@
 var client = ZAFClient.init();
-var environment, pokemon, gym_type, captured, weakness, strength;
+var environment, pokemon, pokemon_type, captured, weakness, strength;
 client.invoke('resize', { width: '100%', height: '600px' });
 client.invoke('ticketFields:tags.hide')
 client.invoke('ticketFields:custom_field_14512152430226.hide')
@@ -33,9 +33,9 @@ async function init() {
     }
 
     if (pokemon != null){
-        gym_type = await getType(pokemon.custom_object_record.custom_object_fields.type);
-        weakness = await getType(gym_type.custom_object_record.custom_object_fields.weakness);
-        strength = await getType(gym_type.custom_object_record.custom_object_fields.strength);
+        pokemon_type = await getType(pokemon.custom_object_record.custom_object_fields.type);
+        weakness = await getType(pokemon_type.custom_object_record.custom_object_fields.weakness);
+        strength = await getType(pokemon_type.custom_object_record.custom_object_fields.strength);
         console.log(weakness, strength)
         updateUI();
     } else {
@@ -49,19 +49,19 @@ function updateUI(){
     $('#image').attr('src',pokemon.custom_object_record.custom_object_fields.image)
     $('#name').html(pokemon.custom_object_record.name)
     $('#index').html('Pokedex #'+pokemon.custom_object_record.external_id)
-    $('#view').attr('href','https://'+environment+'.zendesk.com/agent/custom-objects/pokemon/records/'+pokemon.custom_object_record.id+'?zcli_apps=true')
+    $('#view').attr('href','https://'+environment+'.zendesk.com/agent/custom-objects/pokemon/records/'+pokemon.custom_object_record.id)
     $('#type').html(`
         <span class="
             inline-flex items-center rounded-full 
-            bg-${gym_type.custom_object_record.custom_object_fields.color}-50 
-            px-2 py-1 text-xs font-medium text-${gym_type.custom_object_record.custom_object_fields.color}-700 
-            ring-1 ring-inset ring-${gym_type.custom_object_record.custom_object_fields.color}-600/20
+            bg-${pokemon_type.custom_object_record.custom_object_fields.color}-50 
+            px-2 py-1 text-xs font-medium text-${pokemon_type.custom_object_record.custom_object_fields.color}-700 
+            ring-1 ring-inset ring-${pokemon_type.custom_object_record.custom_object_fields.color}-600/20
         ">
             <img 
-                src="https://pokedex.verschoren.dev/types/${gym_type.custom_object_record.name.toLowerCase()}.png"
+                src="https://pokedex.verschoren.dev/types/${pokemon_type.custom_object_record.name.toLowerCase()}.png"
                 class="h-4 w-4 mr-2"
             >
-            ${gym_type.custom_object_record.name}
+            ${pokemon_type.custom_object_record.name}
         </span>
     `);
     $('#weakness').html(`
