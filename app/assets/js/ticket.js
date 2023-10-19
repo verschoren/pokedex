@@ -1,8 +1,8 @@
 var client = ZAFClient.init();
-var environment, pokemon, gym_type, captured;
+var environment, pokemon, gym_type, captured, weakness, strength;
 client.invoke('resize', { width: '100%', height: '600px' });
 client.invoke('ticketFields:tags.hide')
-client.invoke('ticketFields:ticket_field_14512152430226.hide')
+client.invoke('ticketFields:custom_field_14512152430226.hide')
 
 $(document).ready(async function() {
     init();
@@ -33,7 +33,10 @@ async function init() {
     }
 
     if (pokemon != null){
-        gym_type = await getType();
+        gym_type = await getType(pokemon.custom_object_record.custom_object_fields.type);
+        weakness = await getType(gym_type.custom_object_record.custom_object_fields.weakness);
+        strength = await getType(gym_type.custom_object_record.custom_object_fields.strength);
+        console.log(weakness, strength)
         updateUI();
     } else {
         showEmpty();
@@ -59,6 +62,34 @@ function updateUI(){
                 class="h-4 w-4 mr-2"
             >
             ${gym_type.custom_object_record.name}
+        </span>
+    `);
+    $('#weakness').html(`
+        <span class="
+            inline-flex items-center rounded-full 
+            bg-${weakness.custom_object_record.custom_object_fields.color}-50 
+            px-2 py-1 text-xs font-medium text-${weakness.custom_object_record.custom_object_fields.color}-700 
+            ring-1 ring-inset ring-${weakness.custom_object_record.custom_object_fields.color}-600/20
+        ">
+            <img 
+                src="https://pokedex.verschoren.dev/types/${weakness.custom_object_record.name.toLowerCase()}.png"
+                class="h-4 w-4 mr-2"
+            >
+            ${weakness.custom_object_record.name}
+        </span>
+    `);
+    $('#strength').html(`
+        <span class="
+            inline-flex items-center rounded-full 
+            bg-${strength.custom_object_record.custom_object_fields.color}-50 
+            px-2 py-1 text-xs font-medium text-${strength.custom_object_record.custom_object_fields.color}-700 
+            ring-1 ring-inset ring-${strength.custom_object_record.custom_object_fields.color}-600/20
+        ">
+            <img 
+                src="https://pokedex.verschoren.dev/types/${strength.custom_object_record.name.toLowerCase()}.png"
+                class="h-4 w-4 mr-2"
+            >
+            ${strength.custom_object_record.name}
         </span>
     `);
 }
@@ -100,9 +131,9 @@ async function getCapturedPokemon(){
     }
 }
 
-async function getType(){
+async function getType(type_id){
     return await client.request({
-        url: '/api/v2/custom_objects/pokemon_type/records/'+pokemon.custom_object_record.custom_object_fields.type+'.json',
+        url: '/api/v2/custom_objects/pokemon_type/records/'+type_id+'.json',
         type: 'GET',
         dataType: 'json'
     });
