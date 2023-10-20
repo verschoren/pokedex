@@ -26,62 +26,62 @@
 <script>
 $( document ).ready(async function() {
     
-    const urlParams = new URLSearchParams(window.location.search);
+  const urlParams = new URLSearchParams(window.location.search);
 	const ticket_form_id = urlParams.get('ticket_form_id')
     
-    if (ticket_form_id == '10992076994578'){
+  if (ticket_form_id == '10992076994578'){
 
-        const intermediate = '14512152430226'
-        const base = 'https://customobjectsproxy.verschoren.workers.dev';  
+      const intermediate = '14512152430226'
+      const base = 'https://customobjectsproxy.verschoren.workers.dev';  
 
-        $('#request_custom_fields_'+intermediate).hide(); //hide custom fields
-        $('#request_custom_fields_'+intermediate).after(`
-            <select id="select_pokemon">
-                <option>--</option>
-            </select>
-        `);
+      $('#request_custom_fields_'+intermediate).hide(); //hide custom fields
+      $('#request_custom_fields_'+intermediate).after(`
+          <select id="select_pokemon">
+            <option>--</option>
+          </select>
+      `);
+
+      var api_url = "/api/v2/custom_objects/pokemon/records.json?per_page=100&sort=id";
   
-      	var api_url = "/api/v2/custom_objects/pokemon/records.json?per_page=100&sort=id";
-		
-        const jwt = await getJwt()
+      const jwt = await getJwt()
 
-  	    await processJson(api_url);
- 
-        $('body').on('change', '#select_pokemon', function(){
-            $('#request_custom_fields_'+intermediate).val(this.value);
-        });  
-        
-        async function processJson(path) {
-            var url = base + path;
-            $.ajax({
-                url: url,
-                dataType: 'json',
-                headers: {
-                    Authorization: `Bearer ${jwt}`,
-                    "Content-Type": "application/json"
-                },
-                success: function(response) {
-                    console.log(response)
-                    $.each(response.custom_object_records, function (i, record) {
-                        $('#select_pokemon').append(`<option value="${record.id}">${record.name}</option>`);
-                    });
-                    if (response.meta.has_more == true) {
-                        var next = response.links.next.replaceAll(/https:\/\/(\w+\.)*zendesk\.com/g,'');
-                        processJson(next);
-                    }
-                },
-                error: function(error) {
+      await getRecords(api_url);
 
+      $('body').on('change', '#select_pokemon', function(){
+        $('#request_custom_fields_'+intermediate).val(this.value);
+      });  
+      
+      async function getRecords(path) {
+          var url = base + path;
+          $.ajax({
+            url: url,
+            dataType: 'json',
+            headers: {
+              "Authorization": `Bearer ${jwt}`,
+              "Content-Type": "application/json"
+            },
+            success: function(response) {
+                console.log(response)
+                $.each(response.custom_object_records, function (i, record) {
+                  $('#select_pokemon').append(`<option value="${record.id}">${record.name}</option>`);
+                });
+                if (response.meta.has_more == true) {
+                  var next = response.links.next.replaceAll(/https:\/\/(\w+\.)*zendesk\.com/g,'');
+                  getRecords(next);
                 }
-            });
-        }
+            },
+            error: function(error) {
 
-        async function getJwt(){
-            fetch("/api/v2/help_center/integration/token.json").then(response => {
-                var json =  response.json();
-                return json.token;
-            })
-        }
-    }
+            }
+          });
+      }
+
+      async function getJwt(){
+          fetch("/api/v2/help_center/integration/token.json").then(response => {
+              var json =  response.json();
+              return json.token;
+          })
+      }
+  }
 });
 </script>
