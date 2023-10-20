@@ -11,14 +11,15 @@ export default {
 	 */
 	async fetch(request, env, ctx) {
 		const url = new URL(request.url);
-		const zendesk = 'https://internalnote.zendesk.com';
-        const custom_domain = 'https://support.internalnote.com';
-        const authentication = '' //base64 encoded username/token:api_token
+		const zendesk = 'https://internalnote.zendesk.com'; //your zendesk domain
+		const custom_domain = 'https://support.internalnote.com'; //your help center domain
+		const authentication = '' //base64 encoded username/token:api_token
+		const object_name = 'pokemon' //name of your custom_object
 
 		if (request.method === "OPTIONS") {
 			return handleOptions(request);
         } else if (request.method === "GET") {
-			if (url.pathname.includes("api/v2/custom_objects/pokemon")) {
+			if (url.pathname.includes("api/v2/custom_objects/" + object_name)) {
 				var myHeaders = new Headers();
 				myHeaders.append("Authorization", "Basic " + authentication);
 				
