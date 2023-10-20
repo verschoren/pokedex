@@ -1,9 +1,9 @@
 {
   "app": {
-    "name": "Zen Tunes",
-    "short_description": "Play the famous zen tunes in your help desk.",
-    "long_description": "Play the famous zen tunes in your help desk and \n listen to the beats it has to offer.",
-    "installation_instructions": "Simply click install.",
+    "name": "Pokédex",
+    "short_description": "Show Custom Objects next to tickets",
+    "long_description": "Show Custom Objects next to tickets.",
+    "installation_instructions": "Choose to reference either the captured Pokémon or the regular object in the settings after install.",
     "parameters": {
       "captured": {
         "label": "Use captured Pokémon?",
