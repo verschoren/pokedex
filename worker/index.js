@@ -22,7 +22,7 @@ export default {
 
 			if (url.pathname.includes("custom_objects")) {
 				var myHeaders = new Headers();
-				myHeaders.append("Authorization", "Basic dGhvbWFzQHZlcnNjaG9yZW4uY29tL3Rva2VuOmNIb1BiUDJkck5QOWNGdlMwa3JrWjVEY1ZiTjcwR2xualdBajZYV1k=");
+				myHeaders.append("Authorization", "Basic tokens");
 				
 				var requestOptions = {
                     method: 'GET',
