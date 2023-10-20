@@ -11,18 +11,16 @@ export default {
 	 */
 	async fetch(request, env, ctx) {
 		const url = new URL(request.url);
-		
-		if (request.method === "OPTIONS") {
-			// Handle CORS preflight requests
-			return handleOptions(request);
-		  } else if (
-			request.method === "GET" ||
-			request.method === "HEAD"
-		  ) {
+		const zendesk = 'https://internalnote.zendesk.com';
+        const custom_domain = 'https://support.internalnote.com';
+        const authentication = '' //base64 encoded username/token:api_token
 
-			if (url.pathname.includes("custom_objects")) {
+		if (request.method === "OPTIONS") {
+			return handleOptions(request);
+        } else if (request.method === "GET") {
+			if (url.pathname.includes("api/v2/custom_objects/pokemon")) {
 				var myHeaders = new Headers();
-				myHeaders.append("Authorization", "Basic dGhvbWFzQHZlcnNjaG9yZW4uY29tL3Rva2VuOmNIb1BiUDJkck5QOWNGdlMwa3JrWjVEY1ZiTjcwR2xualdBajZYV1k=");
+				myHeaders.append("Authorization", "Basic " + authentication);
 				
 				var requestOptions = {
                     method: 'GET',
@@ -31,7 +29,7 @@ export default {
                     'content-type': 'application/json'
 				};
 
-				let api_url = `https://internalnote.zendesk.com${url.pathname}?${url.searchParams}`;
+				let api_url = `${zendesk}${url.pathname}?${url.searchParams}`;
 				
                 const data = await fetch(api_url, requestOptions)
 				.then(response => response.json())
@@ -43,7 +41,7 @@ export default {
 				return new Response(JSON.stringify(data), {
 					headers: {
 						"content-type": "application/json",
-						"Access-Control-Allow-Origin": 'https://support.internalnote.com'
+						"Access-Control-Allow-Origin": custom_domain
 					},
 				});
 			}
@@ -57,8 +55,8 @@ export default {
 			});
 		} else {
 			return new Response(null, {
-			  status: 405,
-			  statusText: "Method Not Allowed",
+			    status: 405,
+			    statusText: "Method Not Allowed",
 			});
 		}
 	}
