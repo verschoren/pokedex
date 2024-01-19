@@ -1,8 +1,6 @@
 var client = ZAFClient.init();
 var environment, pokemon, pokemon_type, captured, weakness, strength;
 client.invoke('resize', { width: '100%', height: '600px' });
-client.invoke('ticketFields:tags.hide')
-client.invoke('ticketFields:custom_field_14512152430226.hide')
 
 $(document).ready(async function() {
     init();
