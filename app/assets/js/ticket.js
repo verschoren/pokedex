@@ -44,7 +44,9 @@ async function init() {
 function updateUI(){
     $('#pokemon').removeClass('hidden');
     $('#empty').addClass('hidden');
-    $('#image').attr('src',pokemon.custom_object_record.custom_object_fields.image)
+    var default_image = 'https://internalnote.com/images/default.png'
+    var image= pokemon.custom_object_record.photo ? pokemon.custom_object_record.photo.content_url : default_image;
+    $('#image').attr('src',image);
     $('#name').html(pokemon.custom_object_record.name)
     $('#index').html('Pokedex #'+pokemon.custom_object_record.external_id)
     $('#view').attr('href','https://'+environment+'.zendesk.com/agent/custom-objects/pokemon/records/'+pokemon.custom_object_record.id)
@@ -56,7 +58,7 @@ function updateUI(){
             ring-1 ring-inset ring-${pokemon_type.custom_object_record.custom_object_fields.color}-600/20
         ">
             <img 
-                src="https://pokedex.verschoren.dev/types/${pokemon_type.custom_object_record.name.toLowerCase()}.png"
+                src="https://pokedex.internalnote.com/types/${pokemon_type.custom_object_record.name.toLowerCase()}.png"
                 class="h-4 w-4 mr-2"
             >
             ${pokemon_type.custom_object_record.name}
@@ -70,7 +72,7 @@ function updateUI(){
             ring-1 ring-inset ring-${weakness.custom_object_record.custom_object_fields.color}-600/20
         ">
             <img 
-                src="https://pokedex.verschoren.dev/types/${weakness.custom_object_record.name.toLowerCase()}.png"
+                src="https://pokedex.internalnote.com/types/${weakness.custom_object_record.name.toLowerCase()}.png"
                 class="h-4 w-4 mr-2"
             >
             ${weakness.custom_object_record.name}
@@ -84,7 +86,7 @@ function updateUI(){
             ring-1 ring-inset ring-${strength.custom_object_record.custom_object_fields.color}-600/20
         ">
             <img 
-                src="https://pokedex.verschoren.dev/types/${strength.custom_object_record.name.toLowerCase()}.png"
+                src="https://pokedex.internalnote.com/types/${strength.custom_object_record.name.toLowerCase()}.png"
                 class="h-4 w-4 mr-2"
             >
             ${strength.custom_object_record.name}
