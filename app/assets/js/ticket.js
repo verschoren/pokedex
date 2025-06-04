@@ -44,8 +44,8 @@ async function init() {
 function updateUI(){
     $('#pokemon').removeClass('hidden');
     $('#empty').addClass('hidden');
-    var default_image = 'https://internalnote.com/images/default.png'
-    var image= pokemon.custom_object_record.photo ? pokemon.custom_object_record.photo.content_url : default_image;
+    var default_image = 'https://pokedex.internalnote.com/images/default.png'
+    var image = pokemon.custom_object_record.photo ? pokemon.custom_object_record.photo.content_url : default_image;
     $('#image').attr('src',image);
     $('#name').html(pokemon.custom_object_record.name)
     $('#index').html('Pokedex #'+pokemon.custom_object_record.external_id)

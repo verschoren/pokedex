@@ -58,7 +58,7 @@ function updateUI(){
     $('#badges').removeClass('hidden');
     $('#empty').addClass('hidden');
 
-    $('#badge_image').attr('src', 'https://pokedex.verschoren.dev/badges/'+ badge.custom_object_record.name.toLowerCase().replaceAll(' badge','') +'.png');
+    $('#badge_image').attr('src', 'https://pokedex.internalnote.com/badges/'+ badge.custom_object_record.name.toLowerCase().replaceAll(' badge','') +'.png');
     $('#name').html(badge.custom_object_record.name);
     $('#earned').html(formatDate(badge.custom_object_record.created_at));
     
@@ -79,7 +79,7 @@ function updateUI(){
                 ring-1 ring-inset ring-${gym_type.custom_object_record.custom_object_fields.color}-600/20
             ">
                 <img 
-                    src="https://pokedex.verschoren.dev/types/${gym_type.custom_object_record.name.toLowerCase()}.png"
+                    src="https://pokedex.internalnote.com/types/${gym_type.custom_object_record.name.toLowerCase()}.png"
                     class="h-4 w-4 mr-2"
                 >
                 ${gym_type.custom_object_record.name}
